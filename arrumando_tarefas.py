@@ -24,8 +24,8 @@ For each test case output a line with an integer representing the minimum lost m
 # Falta o main()
 
 def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
-    tarefas_ordenadas: list[tuple[int, int]] = sorted(tarefas, key=lambda tupla: tupla[1])
-    valor_tarefas_total: int = sum(map(lambda tupla: tupla[1], tarefas_ordenadas))
+    tarefas_ordenadas: list[tuple[int, int]] = sorted(tarefas, key=lambda tupla: tupla[0])
+    valor_tarefas_total: int = sum(map(lambda tupla: tupla[0], tarefas_ordenadas))
     tarefas_escolhidas: list[int] = [0 for _ in range(tempo_total)]
     # falta só pegar as tarefas ordenadas e preencher na lista tarefas escolhidas
     # ideia: pegar e colocar no maior tempo possível
