@@ -31,7 +31,7 @@ def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
     print(tarefas_escolhidas)
     # vou transformar esse for em um while, pois há casos que não estão sendo tratados por causa do tempo_total.
     # while que vai até tamanho total da lista *tarefas ou se a lista estiver completa (ex: variavel n de adições == len(tarefas_escolhidas))
-    for i in range(0, tempo_total):
+    while i < len(tarefas_ordenadas) or i > tempo_total:
         tempo_tarefa_atual = tarefas_ordenadas[i][1] - 1
         adicionado: bool = False
         while not adicionado and 0 <= tempo_tarefa_atual:
@@ -39,6 +39,7 @@ def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
                 tarefas_escolhidas[tempo_tarefa_atual] = tarefas_ordenadas[i][0]
                 adicionado = True
             tempo_tarefa_atual -= 1
+            i += 1
     print(tarefas_escolhidas)
     valor_tarefas_escolhidas: int = sum(tarefas_escolhidas)
     return valor_tarefas_total - valor_tarefas_escolhidas
