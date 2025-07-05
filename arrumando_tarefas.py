@@ -1,27 +1,27 @@
-"""
-Input
+from sys import argv
 
-The input is composed of several test cases and ends with end of file. 
-Each one describes a list of tasks and starts with two integers N (1 ≤N) and H (H ≤ 1000), which are, 
-respectively, the number of tasks and the number of hours that the computer is available. 
-Then follow N lines, each one with two integer v (1 ≤ v ≤ 1000) and t (1 ≤ t ≤ H) described above.
-
-3 3
-5 1
-10 2
-20 3
-4 2
-1 2 
-2 1 
-4 1 
-2 2
-
-Output
-For each test case output a line with an integer representing the minimum lost money.
-0
-3
-"""
-# Falta o main()
+def main() -> None:
+    if len(argv) == 2:
+        with open(argv[1], 'r') as file:
+            linhas = file.readlines()
+            casos_teste: list[tuple[int, int, list[tuple[int, int]]]] = []
+            i: int = 0
+            while i < len(linhas):
+                linha = linhas[i].strip()
+                if linha:
+                    n, h = map(int, linha.split())
+                    tarefas: list[tuple[int, int]] = []
+                    for j in range(n):
+                        i += 1
+                        v, t = map(int, linhas[i].strip().split())
+                        tarefas.append((v, t))
+                    casos_teste.append((n, h, tarefas))
+                i += 1
+            for n, h, tarefas in casos_teste:
+                resultado: int = arrumando_tarefas(h, tarefas)
+                print(resultado)
+    else:
+        raise ValueError("Por favor, forneça o nome do arquivo de testes como argumento.")
 
 def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
     tarefas_ordenadas: list[tuple[int, int]] = sorted(tarefas, key=lambda tupla: tupla[0], reverse=True)
@@ -40,9 +40,5 @@ def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
     valor_tarefas_escolhidas: int = sum(tarefas_escolhidas)
     return valor_tarefas_total - valor_tarefas_escolhidas
 
-print(arrumando_tarefas(3, [(5, 1), (10, 2), (20, 3)])) # 0
-print(arrumando_tarefas(2, [(1, 2), (2, 1), (4, 1), (2, 2)])) # 3
-print(arrumando_tarefas(4, [(10, 1), (20, 1), (30, 1), (40, 1)])) #60
-print(arrumando_tarefas(2, [(5, 2), (10, 1), (7, 1), (8, 2), (9, 1)])) # 21
-print(arrumando_tarefas(5, [(10, 5), (10, 1), (10, 3), (10, 2), (10, 4)])) # 0
-print(arrumando_tarefas(6, [(10, 2), (20, 2), (5, 2), (7, 1), (25, 6), (30, 5), (15, 3)])) # 12
+if __name__ == "__main__":
+    main()
