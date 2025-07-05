@@ -25,13 +25,10 @@ For each test case output a line with an integer representing the minimum lost m
 
 def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
     tarefas_ordenadas: list[tuple[int, int]] = sorted(tarefas, key=lambda tupla: tupla[0], reverse=True)
-    print(tarefas_ordenadas)
     valor_tarefas_total: int = sum(map(lambda tupla: tupla[0], tarefas_ordenadas))
     tarefas_escolhidas: list[int] = [0 for _ in range(tempo_total)]
-    print(tarefas_escolhidas)
-    # vou transformar esse for em um while, pois há casos que não estão sendo tratados por causa do tempo_total.
-    # while que vai até tamanho total da lista *tarefas ou se a lista estiver completa (ex: variavel n de adições == len(tarefas_escolhidas))
-    while i < len(tarefas_ordenadas) or i > tempo_total:
+    i: int = 0
+    while i < len(tarefas_ordenadas):
         tempo_tarefa_atual = tarefas_ordenadas[i][1] - 1
         adicionado: bool = False
         while not adicionado and 0 <= tempo_tarefa_atual:
@@ -39,10 +36,13 @@ def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
                 tarefas_escolhidas[tempo_tarefa_atual] = tarefas_ordenadas[i][0]
                 adicionado = True
             tempo_tarefa_atual -= 1
-            i += 1
-    print(tarefas_escolhidas)
+        i += 1
     valor_tarefas_escolhidas: int = sum(tarefas_escolhidas)
     return valor_tarefas_total - valor_tarefas_escolhidas
 
-print(arrumando_tarefas(3, [(5, 1), (10, 2), (20, 3)]))
-print(arrumando_tarefas(2, [(1, 2), (2, 1), (4, 1), (2, 2)]))
+print(arrumando_tarefas(3, [(5, 1), (10, 2), (20, 3)])) # 0
+print(arrumando_tarefas(2, [(1, 2), (2, 1), (4, 1), (2, 2)])) # 3
+print(arrumando_tarefas(4, [(10, 1), (20, 1), (30, 1), (40, 1)])) #60
+print(arrumando_tarefas(2, [(5, 2), (10, 1), (7, 1), (8, 2), (9, 1)])) # 21
+print(arrumando_tarefas(5, [(10, 5), (10, 1), (10, 3), (10, 2), (10, 4)])) # 0
+print(arrumando_tarefas(6, [(10, 2), (20, 2), (5, 2), (7, 1), (25, 6), (30, 5), (15, 3)])) # 12
