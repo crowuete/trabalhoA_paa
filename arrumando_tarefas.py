@@ -1,33 +1,28 @@
-from sys import argv
+import sys
 
 def main() -> None:
-    # Verifica se o nome do arquivo de testes foi fornecido como argumento
-    if len(argv) == 2:
-        # Abre o arquivo de testes e lê as linhas
-        with open(argv[1], 'r') as file:
-            # Cada linha contém o número de tarefas, o tempo total disponível e as tarefas com seus valores e tempos
-            linhas = file.readlines()
-            casos_teste: list[tuple[int, int, list[tuple[int, int]]]] = []
-            i: int = 0
-            # Processa as linhas do arquivo
-            while i < len(linhas):
-                linha = linhas[i].strip()
-                if linha:
-                    n, h = map(int, linha.split())
-                    tarefas: list[tuple[int, int]] = []
-                    # Lê as próximas n linhas para obter as tarefas
-                    for j in range(n):
-                        i += 1
-                        v, t = map(int, linhas[i].strip().split())
-                        tarefas.append((v, t))
-                    casos_teste.append((n, h, tarefas))
+    input = sys.stdin.read
+    linhas = input().splitlines()
+
+    casos_teste: list[tuple[int, int, list[tuple[int, int]]]] = []
+    i: int = 0
+
+    while i < len(linhas):
+        linha = linhas[i].strip()
+        if linha:
+            n, h = map(int, linha.split())
+            tarefas: list[tuple[int, int]] = []
+            for j in range(n):
                 i += 1
-            # Para cada caso de teste, chama a função arrumando_tarefas e imprime o resultado
-            for n, h, tarefas in casos_teste:
-                resultado: int = arrumando_tarefas(h, tarefas)
-                print(resultado)
-    else:
-        raise ValueError("Por favor, forneça o nome do arquivo de testes como argumento.")
+                v, t = map(int, linhas[i].strip().split())
+                tarefas.append((v, t))
+            casos_teste.append((n, h, tarefas))
+        i += 1
+
+    for n, h, tarefas in casos_teste:
+        resultado: int = arrumando_tarefas(h, tarefas)
+        print(resultado)
+
 
 def arrumando_tarefas(tempo_total: int, tarefas: list[tuple[int, int]]) -> int:
     # Ordena as tarefas por valor em ordem decrescente
