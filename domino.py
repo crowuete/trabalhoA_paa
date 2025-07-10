@@ -1,3 +1,5 @@
+# Codinome da Equipe: quartafeira. Nome dos Integrantes: Caetano Vendrame Mantovani (ra: 135846), Lucas de Oliveira Fratus (ra:134698)
+
 import sys
 sys.setrecursionlimit(10000)
 
